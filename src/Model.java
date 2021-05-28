@@ -3,6 +3,7 @@ public class Model {
 	
 	private void run() {
 		// TODO 自動生成されたメソッド・スタブ
+		System.out.println("hello world!");
 		return;
 	}
 	
