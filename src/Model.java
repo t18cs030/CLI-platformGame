@@ -3,12 +3,15 @@ public class Model {
 
 	private static final int WIDTH  = 0;
 	private static final int HEIGHT = 0;
+
 	private ConsoleView view;
 	private ConsoleController controller;
+	private Pleyer pleyer;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
+		this.pleyer = new Pleyer(this);
 	}
 	
 	private void run() {
