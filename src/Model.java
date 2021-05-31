@@ -13,16 +13,17 @@ public class Model {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
+		player.paint(view);
 	}
 	
 	public void prosess(String event) {
 		if(event.equals("TIME_ELAPSED")) {
-			
+			view.put('|', 10, 5);
 		}
 		else {
 			player.paint(view);
 		}
-		view.update();
+		view.paint();
 	}
 	
 	private void run() throws IOException {
