@@ -28,5 +28,15 @@ public class ConsoleView {
 		if( x<0 || x>=width || y<0 || y>=height) return ;
 		screan[x][y]=c;
 	}
+	
+	public void paint() {
+		for(int y=0; y< height; y++) {
+			for(int x=0; x<width ; x++) {
+				System.out.print(screan[x][y]);
+			}
+			System.out.println();
+		}
+	}
 
+	
 }
