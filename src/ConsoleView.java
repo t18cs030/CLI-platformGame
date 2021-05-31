@@ -38,6 +38,7 @@ public class ConsoleView {
 
 	public void update() {
 		clear();
+		model.getPlayer().paint(this);
 		paint();
 	}
 	
