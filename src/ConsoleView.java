@@ -23,5 +23,10 @@ public class ConsoleView {
 			}
 		}
 	}
+	
+	public void put(char c,int x,int y) {
+		if( x<0 || x>=width || y<0 || y>=height) return ;
+		screan[x][y]=c;
+	}
 
 }
