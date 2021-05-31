@@ -28,5 +28,13 @@ public class ConsoleController implements ActionListener {
 		// 時間経過の処理
 		
 	}
-
+	
+	// デバック用
+	public ConsoleController() {
+		timer = new Timer(DELAY,this);
+	}
+	public static void main(String[] args) {
+		ConsoleController controller = new ConsoleController();
+		controller.run();
+	}
 }
