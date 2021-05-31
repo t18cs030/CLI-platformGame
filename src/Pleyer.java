@@ -1,7 +1,7 @@
 
 public class Pleyer {
 
-	public Pleyer(Model model) {
+	public Pleyer() {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 

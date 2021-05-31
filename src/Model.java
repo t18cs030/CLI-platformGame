@@ -11,7 +11,7 @@ public class Model {
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
-		this.pleyer = new Pleyer(this);
+		this.pleyer = new Pleyer();
 	}
 	
 	private void run() {
