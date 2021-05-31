@@ -31,6 +31,10 @@ public class Model {
 		controller.run();
 	}
 	
+	public Pleyer getPlayer() {
+		return player;
+	}
+	
 	public static void main(String[] args) throws IOException {
 		Model model = new Model();
 		model.run();
