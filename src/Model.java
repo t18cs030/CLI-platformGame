@@ -23,7 +23,7 @@ public class Model {
 		else {
 			player.paint(view);
 		}
-		view.paint();
+		view.update();
 	}
 	
 	private void run() throws IOException {
