@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 public class Model {
 
@@ -14,12 +15,12 @@ public class Model {
 		this.pleyer = new Pleyer();
 	}
 	
-	private void run() {
+	private void run() throws IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		controller.run();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Model model = new Model();
 		model.run();
 	}
