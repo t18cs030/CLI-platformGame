@@ -38,5 +38,9 @@ public class ConsoleView {
 		}
 	}
 
+	public void update() {
+		clear();
+		paint();
+	}
 	
 }
