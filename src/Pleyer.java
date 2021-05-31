@@ -11,6 +11,14 @@ public class Pleyer {
 		this.x=20;
 		this.y=10;
 	}
+	
+	public void upPlayer() {
+		y -= 1; 
+	}
+	public void downPlayer() {
+		y += 1;
+	}
+	
 	public void paint(ConsoleView view) {
 		view.put(c,x,y);
 	}
