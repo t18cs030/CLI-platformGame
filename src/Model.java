@@ -18,10 +18,10 @@ public class Model {
 	
 	public void prosess(String event) {
 		if(event.equals("TIME_ELAPSED")) {
-			view.put('|', 10, 5);
 		}
 		else {
-			player.paint(view);
+			if(event.equals("w")) player.upPlayer();
+			else if(event.equals("s")) player.downPlayer();
 		}
 		view.update();
 	}
