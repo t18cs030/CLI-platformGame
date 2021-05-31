@@ -26,15 +26,16 @@ public class ConsoleController implements ActionListener {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String line = null;
 		while((line = reader.readLine()) != null)
-			System.out.println(line);
+			//System.out.println(line);
+			model.prosess(line);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO 自動生成されたメソッド・スタブ
 		// 時間経過の処理
-		System.out.println("TIME_ELAPSED");
-		
+		//System.out.println("TIME_ELAPSED");
+		model.prosess("TIME_ELAPSED");
 	}
 	
 	// デバック用
