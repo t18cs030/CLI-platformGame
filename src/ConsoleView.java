@@ -1,8 +1,6 @@
 
 public class ConsoleView {
 	
-	private final static int WIDTH = 80;
-	private final static int HEIGHT = 24;
 	private char screan[][];
 	private Model model;
 	private int width;
