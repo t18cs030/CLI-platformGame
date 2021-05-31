@@ -1,17 +1,27 @@
 
 public class Model {
 
-	private static final int WIDTH  = 0;
-	private static final int HEIGHT = 0;
+	private static final int WIDTH  = 80;
+	private static final int HEIGHT = 24;
 
 	private ConsoleView view;
 	private ConsoleController controller;
-	private Pleyer pleyer;
+	private Pleyer player;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
-		this.pleyer = new Pleyer();
+		this.player = new Pleyer();
+	}
+	
+	public void prosess(String event) {
+		if(event.equals("TIME_ELAPSED")) {
+			
+		}
+		else {
+			player.paint(view);
+		}
+		view.update();
 	}
 	
 	private void run() {
