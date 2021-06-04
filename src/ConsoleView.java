@@ -39,7 +39,8 @@ public class ConsoleView {
 	public void update() {
 		clear();
 		model.getPlayer().paint(this);
-		model.getEnemy().paint(this);
+		for(Enemy e:model.getEnemys())
+			e.paint(this);
 		for(Map m:model.getMaps())
 				m.paint(this);
 		paint();

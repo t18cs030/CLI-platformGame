@@ -9,17 +9,16 @@ public class Model {
 	private ConsoleView view;
 	private ConsoleController controller;
 	private Pleyer player;
-	private Enemy enemy;
+	private LinkedList<Enemy> enemy;
 	private LinkedList<Map> map;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
-		this.enemy = new Enemy(WIDTH,HEIGHT);
+		this.enemy = new LinkedList<Enemy>();
 		this.map = new LinkedList<Map>();
 		player.paint(view);
-		enemy.paint(view);
 	}
 	
 	public void prosess(String event) {
@@ -39,7 +38,13 @@ public class Model {
 			/* 自機の更新 */
 			player.update();
 			/* 敵のスクロール処理 */
-			enemy.update();
+			for(Enemy e:enemy)
+				e.update();
+			LinkedList<Enemy> new_enemy = new LinkedList<Enemy>();
+			for(Enemy e:enemy)
+				if(!e.isOutScrean(WIDTH,HEIGHT))
+					new_enemy.add(e);
+			enemy = new_enemy;
 
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
@@ -52,6 +57,7 @@ public class Model {
 			if(event.equals("w")) player.upPlayer(); // 上に移動
 			else if(event.equals("s")) player.downPlayer(); // 下に移動
 			else if(event.equals("j")) player.jumpPlayer(); // ジャンプ
+			enemy.add(makeEnemy()); // キー入力で敵がPOP
 		}
 		view.update();
 	}
@@ -65,7 +71,7 @@ public class Model {
 		return player;
 	}
 	
-	public Enemy getEnemy() {
+	public LinkedList<Enemy> getEnemys() {
 		return enemy;
 	}
 	
