@@ -40,7 +40,8 @@ public class ConsoleView {
 		clear();
 		model.getPlayer().paint(this);
 		model.getEnemy().paint(this);
-		model.getMap().paint(this);
+		for(Map m:model.getMaps())
+				m.paint(this);
 		paint();
 	}
 	

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Model {
 
@@ -9,26 +10,37 @@ public class Model {
 	private ConsoleController controller;
 	private Pleyer player;
 	private Enemy enemy;
-	private Map map;
+	private LinkedList<Map> map;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
 		this.enemy = new Enemy(WIDTH,HEIGHT);
-		this.map = new Map(WIDTH,HEIGHT);
+		this.map = new LinkedList<Map>();
 		player.paint(view);
 		enemy.paint(view);
-		map.paint(view);
 	}
 	
 	public void prosess(String event) {
 		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
 			// 床がないとき自由落下する
-			player.update(); 
+			/* 床スクロール処理 */
+			for(Map m:map)
+				m.update();
+			LinkedList<Map> new_map = new LinkedList<Map>();
+			for(Map m:map)
+				if(!m.isOutScrean(WIDTH,HEIGHT))
+					new_map.add(m);
+			map = new_map;
+			/* 右端に床を追加 */
+			map.add(makeMap());
+			/* 自機の更新 */
+			player.update();
+			/* 敵のスクロール処理 */
 			enemy.update();
-			map.update();
+
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
 				System.out.println("OUT!!");
@@ -57,8 +69,15 @@ public class Model {
 		return enemy;
 	}
 	
-	public Map getMap() {
+	public LinkedList<Map> getMaps() {
 		return map;
+	}
+	
+	public Map makeMap() {
+		return new Map(WIDTH,HEIGHT);
+	}
+	public Enemy makeEnemy() {
+		return new Enemy(WIDTH,HEIGHT);
 	}
 	
 	public static void main(String[] args) throws IOException {

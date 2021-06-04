@@ -23,4 +23,8 @@ public class Map {
 	public void paint(ConsoleView view) {
 		view.put(m, x, y);
 	}
+	public boolean isOutScrean(int width, int height) {
+		// TODO 自動生成されたメソッド・スタブ
+		return x<0 || width <= x || y<0 || height <= y;
+	}
 }
