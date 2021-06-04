@@ -18,10 +18,12 @@ public class Model {
 	
 	public void prosess(String event) {
 		if(event.equals("TIME_ELAPSED")) {
+			player.update(); // 床がないとき自由落下する
 		}
 		else {
-			if(event.equals("w")) player.upPlayer();
-			else if(event.equals("s")) player.downPlayer();
+			if(event.equals("w")) player.upPlayer(); // 上に移動
+			else if(event.equals("s")) player.downPlayer(); // 下に移動
+			else if(event.equals("j")) player.jumpPlayer(); // ジャンプ
 		}
 		view.update();
 	}
