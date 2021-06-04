@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 public class ConsoleView {
 	
@@ -41,7 +42,8 @@ public class ConsoleView {
 		model.getPlayer().paint(this);
 		for(Enemy e:model.getEnemys())
 			e.paint(this);
-		for(Map m:model.getMaps())
+		for(LinkedList<Map> ms:model.getMaps())
+			for(Map m:ms)
 				m.paint(this);
 		paint();
 	}

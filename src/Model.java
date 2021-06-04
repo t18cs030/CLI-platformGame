@@ -10,14 +10,17 @@ public class Model {
 	private ConsoleController controller;
 	private Pleyer player;
 	private LinkedList<Enemy> enemy;
-	private LinkedList<Map> map;
+	private LinkedList<LinkedList<Map>> maps;
+
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
 		this.enemy = new LinkedList<Enemy>();
-		this.map = new LinkedList<Map>();
+		this.maps = new LinkedList<LinkedList<Map>>();
+		maps.add(new LinkedList<Map>());
+		maps.add(new LinkedList<Map>());
 		player.paint(view);
 	}
 	
@@ -25,26 +28,14 @@ public class Model {
 		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
 			// 床がないとき自由落下する
-			/* 床スクロール処理 */
-			for(Map m:map)
-				m.update();
-			LinkedList<Map> new_map = new LinkedList<Map>();
-			for(Map m:map)
-				if(!m.isOutScrean(WIDTH,HEIGHT))
-					new_map.add(m);
-			map = new_map;
-			/* 右端に床を追加 */
-			map.add(makeMap());
+			/* 床のスクロール処理 */
+			scrollMap(maps);
+			
 			/* 自機の更新 */
 			player.update();
+			
 			/* 敵のスクロール処理 */
-			for(Enemy e:enemy)
-				e.update();
-			LinkedList<Enemy> new_enemy = new LinkedList<Enemy>();
-			for(Enemy e:enemy)
-				if(!e.isOutScrean(WIDTH,HEIGHT))
-					new_enemy.add(e);
-			enemy = new_enemy;
+			scrollEnemy(enemy);
 
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
@@ -75,12 +66,38 @@ public class Model {
 		return enemy;
 	}
 	
-	public LinkedList<Map> getMaps() {
-		return map;
+	public LinkedList<LinkedList<Map>> getMaps() {
+		return maps;
 	}
 	
-	public Map makeMap() {
-		return new Map(WIDTH,HEIGHT);
+	public void scrollMap(LinkedList<LinkedList<Map>> obj) {
+		// LinkedList<Map> すべての高さのMapを左へ一つスクロール
+		for(LinkedList<Map> ms:obj) {
+			for(Map m:ms)	
+				m.update();
+			LinkedList<Map> new_map = new LinkedList<Map>();
+			for(Map m:ms)
+				if(!m.isOutScrean(WIDTH,HEIGHT))
+					new_map.add(m);
+			ms = new_map;
+		}
+		/* すべての高さのMapの右端に床を追加 */
+		for(int i=0;i<obj.size();i++)
+			obj.get(i).add(makeMap(WIDTH,HEIGHT/(i+1)));
+	}
+	
+	public void scrollEnemy(LinkedList<Enemy> obj) {
+		// LinkedList<Map> 
+		for(Enemy e:obj)
+			e.update();
+		LinkedList<Enemy> new_enemy = new LinkedList<Enemy>();
+		for(Enemy e:obj)
+			if(!e.isOutScrean(WIDTH,HEIGHT))
+				new_enemy.add(e);
+		obj = new_enemy;
+	}
+	public Map makeMap(int width,int height) {
+		return new Map(width,height);
 	}
 	public Enemy makeEnemy() {
 		return new Enemy(WIDTH,HEIGHT);
