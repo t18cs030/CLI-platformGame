@@ -5,7 +5,8 @@ public class Model {
 
 	private static final int WIDTH  = 80;
 	private static final int HEIGHT = 24;
-	private static final int FLOER = 3; // 床の数
+	private static final int FLOOR = 3; // 床の数
+
 
 	private ConsoleView view;
 	private ConsoleController controller;
@@ -20,7 +21,7 @@ public class Model {
 		this.player = new Pleyer();
 		this.enemy = new LinkedList<Enemy>();
 		this.maps = new LinkedList<LinkedList<Map>>();
-		for(int i=0;i<FLOER;i++)
+		for(int i=0;i<FLOOR;i++)
 			maps.add(new LinkedList<Map>());
 		player.paint(view);
 	}
@@ -28,18 +29,17 @@ public class Model {
 	public void prosess(String event) {
 		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
-			// 床がないとき自由落下する
 			/* 床のスクロール処理 */
 			scrollMap(maps);
 			
 			/* 自機の更新 */
-			player.update();
+			player.update(view,WIDTH,HEIGHT);
 			
 			/* 敵のスクロール処理 */
 			scrollEnemy(enemy);
 
 			// 場外にでてゲームオーバーの処理
-			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
+			if(player.isOutScrean(WIDTH, HEIGHT)) { 
 				System.out.println("OUT!!");
 				return ;
 			}
@@ -84,7 +84,7 @@ public class Model {
 		}
 		/* すべての高さのMapの右端に床を追加 */
 		for(int i=0;i<obj.size();i++)
-			obj.get(i).add(makeMap(WIDTH,HEIGHT/FLOER * (i+1)));// FLOER数で分割する
+			obj.get(i).add(makeMap(WIDTH,HEIGHT/FLOOR * (i+1)));// FLOER数で分割する
 	}
 	
 	public void scrollEnemy(LinkedList<Enemy> obj) {

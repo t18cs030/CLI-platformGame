@@ -42,9 +42,9 @@ public class ConsoleView {
 		for(LinkedList<Map> ms:model.getMaps())
 			for(Map m:ms)
 				m.paint(this);
-		model.getPlayer().paint(this);
 		for(Enemy e:model.getEnemys())
 			e.paint(this);
+		model.getPlayer().paint(this);
 		paint();
 	}
 	
@@ -62,6 +62,11 @@ public class ConsoleView {
 			view.paint();
 			Thread.sleep(100);
 		}
+	}
+
+	public char getChar(int x, int y) {
+		// TODO 自動生成されたメソッド・スタブ
+		return screan[x][y];
 	}
 	
 }

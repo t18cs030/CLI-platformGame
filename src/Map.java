@@ -7,13 +7,14 @@
 
 /*まずは床を三種類の高さに出現させよう。穴は、ランダムで*/
 public class Map {
+	
+	private final static char FLOOR = '_'; // 床を表す文字
+	private final static int dx = -1;// スクロール速度
 	private char m; // Mapの床の表示
-	private int x,y;
-	private int dx;// スクロール速度
+	private int x,y;// 出現位置と出現高さ
 	
 	public Map(int width, int height) {
-		this.m = '_';
-		this.dx = -1;
+		this.m = FLOOR;
 		this.x = width-1; // 画面右端
 		this.y = height-1; //　画面一番下
 	}
