@@ -9,14 +9,17 @@ public class Model {
 	private ConsoleController controller;
 	private Pleyer player;
 	private Enemy enemy;
+	private Map map;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
 		this.enemy = new Enemy(WIDTH,HEIGHT);
+		this.map = new Map(WIDTH,HEIGHT);
 		player.paint(view);
 		enemy.paint(view);
+		map.paint(view);
 	}
 	
 	public void prosess(String event) {
@@ -25,6 +28,7 @@ public class Model {
 			// 床がないとき自由落下する
 			player.update(); 
 			enemy.update();
+			map.update();
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
 				System.out.println("OUT!!");
@@ -51,6 +55,10 @@ public class Model {
 	
 	public Enemy getEnemy() {
 		return enemy;
+	}
+	
+	public Map getMap() {
+		return map;
 	}
 	
 	public static void main(String[] args) throws IOException {
