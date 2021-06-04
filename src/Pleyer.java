@@ -31,7 +31,9 @@ public class Pleyer {
 		dy +=0.2;
 		y+=dy;
 	}
-	
+	public boolean isOutOfScrean(int width,int height) {
+		return x<0 || width <= x || y < 0 || height <= y;
+	}
 	public void paint(ConsoleView view) {
 		view.put(c,(int)(x+0.5),(int)(y+0.5));
 	}

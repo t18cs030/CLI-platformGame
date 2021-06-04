@@ -19,6 +19,10 @@ public class Model {
 	public void prosess(String event) {
 		if(event.equals("TIME_ELAPSED")) {
 			player.update(); // 床がないとき自由落下する
+			if(player.isOutOfScrean(WIDTH, HEIGHT)) { // 場外にでてゲームオーバーの処理
+				System.out.println("OUT!!");
+				return ;
+			}
 		}
 		else {
 			if(event.equals("w")) player.upPlayer(); // 上に移動
