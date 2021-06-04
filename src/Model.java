@@ -8,22 +8,30 @@ public class Model {
 	private ConsoleView view;
 	private ConsoleController controller;
 	private Pleyer player;
+	private Enemy enemy;
 	
 	public Model() {
 		this.view = new ConsoleView(this,WIDTH,HEIGHT);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
+		this.enemy = new Enemy(WIDTH,HEIGHT);
 		player.paint(view);
+		enemy.paint(view);
 	}
 	
 	public void prosess(String event) {
+		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
-			player.update(); // 床がないとき自由落下する
-			if(player.isOutOfScrean(WIDTH, HEIGHT)) { // 場外にでてゲームオーバーの処理
+			// 床がないとき自由落下する
+			player.update(); 
+			enemy.update();
+			// 場外にでてゲームオーバーの処理
+			if(player.isOutOfScrean(WIDTH, HEIGHT)) { 
 				System.out.println("OUT!!");
 				return ;
 			}
 		}
+		/* キー入力処理 */
 		else {
 			if(event.equals("w")) player.upPlayer(); // 上に移動
 			else if(event.equals("s")) player.downPlayer(); // 下に移動
@@ -39,6 +47,10 @@ public class Model {
 	
 	public Pleyer getPlayer() {
 		return player;
+	}
+	
+	public Enemy getEnemy() {
+		return enemy;
 	}
 	
 	public static void main(String[] args) throws IOException {
