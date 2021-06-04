@@ -28,8 +28,8 @@ public class Pleyer {
 		y += dy;
 	}
 	public void update() {
-		dy +=0.2;
-		y+=dy;
+		//dy +=0.2;
+		//y+=dy;
 	}
 	public boolean isOutOfScrean(int width,int height) {
 		return x<0 || width <= x || y < 0 || height <= y;

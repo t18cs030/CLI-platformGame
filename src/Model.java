@@ -5,6 +5,7 @@ public class Model {
 
 	private static final int WIDTH  = 80;
 	private static final int HEIGHT = 24;
+	private static final int FLOER = 3; // 床の数
 
 	private ConsoleView view;
 	private ConsoleController controller;
@@ -19,8 +20,8 @@ public class Model {
 		this.player = new Pleyer();
 		this.enemy = new LinkedList<Enemy>();
 		this.maps = new LinkedList<LinkedList<Map>>();
-		maps.add(new LinkedList<Map>());
-		maps.add(new LinkedList<Map>());
+		for(int i=0;i<FLOER;i++)
+			maps.add(new LinkedList<Map>());
 		player.paint(view);
 	}
 	
@@ -83,7 +84,7 @@ public class Model {
 		}
 		/* すべての高さのMapの右端に床を追加 */
 		for(int i=0;i<obj.size();i++)
-			obj.get(i).add(makeMap(WIDTH,HEIGHT/(i+1)));
+			obj.get(i).add(makeMap(WIDTH,HEIGHT/FLOER * (i+1)));// FLOER数で分割する
 	}
 	
 	public void scrollEnemy(LinkedList<Enemy> obj) {
@@ -96,6 +97,7 @@ public class Model {
 				new_enemy.add(e);
 		obj = new_enemy;
 	}
+	
 	public Map makeMap(int width,int height) {
 		return new Map(width,height);
 	}

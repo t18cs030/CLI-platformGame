@@ -33,18 +33,18 @@ public class ConsoleView {
 			for(int x=0; x<width ; x++) {
 				System.out.print(screan[x][y]);
 			}
-			System.out.println();
+			System.out.println(y);
 		}
 	}
 
 	public void update() {
 		clear();
-		model.getPlayer().paint(this);
-		for(Enemy e:model.getEnemys())
-			e.paint(this);
 		for(LinkedList<Map> ms:model.getMaps())
 			for(Map m:ms)
 				m.paint(this);
+		model.getPlayer().paint(this);
+		for(Enemy e:model.getEnemys())
+			e.paint(this);
 		paint();
 	}
 	

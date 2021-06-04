@@ -20,7 +20,7 @@ public class Enemy {
 		this.s = '?';
 		//x = 15;
 		this.x = width -1 ; //　画面右端
-		this.y = random.nextInt(height) -1; // 高さはランダム
+		this.y = random.nextInt(height); // 高さはランダム
 	}
 	public void update() {
 		x -=1;
