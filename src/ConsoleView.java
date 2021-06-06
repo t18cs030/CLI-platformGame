@@ -54,6 +54,7 @@ public class ConsoleView {
 		this.height=24;
 		this.screan=new char[width][height];
 	}
+	
 	public static void main(String[] args) throws InterruptedException {
 		ConsoleView view = new ConsoleView();
 		for(int x=0;x<10;x++) {

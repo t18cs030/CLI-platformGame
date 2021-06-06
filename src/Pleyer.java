@@ -21,10 +21,12 @@ public class Pleyer {
 	public void upPlayer() {
 		y -= 1; 
 	}
+	
 	public void downPlayer() {
-		//dy = 0.0;
+		dy = 1.0;
 		y += 1;
 	}
+	
 	public void jumpPlayer() {
 		dy = jumpPower;
 		y += dy;
