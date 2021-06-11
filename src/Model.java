@@ -13,7 +13,6 @@ public class Model {
 	private ConsoleController controller;
 	private Pleyer player;
 	private LinkedList<Enemy> enemy;
-	private LinkedList<LinkedList<Map>> maps;
 	private LinkedList<Hool> hool;
 	private LinkedList<Bullet> bullets;
 
@@ -23,11 +22,8 @@ public class Model {
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
 		this.enemy = new LinkedList<Enemy>();
-		this.maps = new LinkedList<LinkedList<Map>>();
 		this.bullets = new LinkedList<Bullet>();
 		this.hool = new LinkedList<Hool>();
-		for(int i=0;i<FLOOR;i++)
-			maps.add(new LinkedList<Map>());
 		player.paint(view);
 	}
 	
@@ -35,9 +31,6 @@ public class Model {
 		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
 			/* 床のスクロール処理 */
-			//scrollMap();
-			
-			/**/
 			scrollHool();
 			
 			/* 自機の更新 */
@@ -113,10 +106,6 @@ public class Model {
 		return enemy;
 	}
 	
-	public LinkedList<LinkedList<Map>> getMaps() {
-		return maps;
-	}
-	
 	public LinkedList<Hool> getHool() {
 		// TODO 自動生成されたメソッド・スタブ
 		return hool;
@@ -124,22 +113,6 @@ public class Model {
 	
 	public LinkedList<Bullet> getBullets() {
 		return bullets;
-	}
-	public void scrollMap() {
-		// LinkedList<Map> すべての高さのMapを左へ一つスクロール
-		for(LinkedList<Map> ms:maps) {
-			for(Map m:ms)	
-				m.update();
-			LinkedList<Map> new_map = new LinkedList<Map>();
-			for(Map m:ms)
-				if(!m.isOutScrean(WIDTH,HEIGHT))
-					new_map.add(m);
-			ms = new_map;
-		}
-		/* すべての高さのMapの右端に床を追加 */
-		for(int i=0;i<maps.size();i++) {
-			maps.get(i).add(makeMap(WIDTH,HEIGHT/FLOOR * (i+1)));// FLOER数で分割する
-		}
 	}
 
 	private void scrollHool() {
@@ -182,10 +155,6 @@ public class Model {
 			if(!e.isOutScrean(WIDTH,HEIGHT))
 				new_enemy.add(e);
 		enemy = new_enemy;
-	}
-	
-	public Map makeMap(int width,int height) {
-		return new Map(width,height);
 	}
 	
 	public Enemy makeEnemy() {
