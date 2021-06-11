@@ -70,13 +70,12 @@ public class Pleyer {
 	}
 	
 	public boolean isHit(LinkedList<Enemy> es) {
+		// 自機上の文字を読み込む
 		for(Enemy e:es) {
-			if(x == e.getX()) {
-				if(y==e.getY()) {
+			if(x == e.getX() && y==e.getY()) {
 					return true;
 				}
 			}
-		}; // 自機上の文字を読み込む
 		return false;
 	}
 	public boolean isOutScrean(int width,int height) {
@@ -85,5 +84,10 @@ public class Pleyer {
 	public void paint(ConsoleView view) {
 		view.put(c,(int)(x+0.5),(int)(y+0.5));
 	}
-
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
 }

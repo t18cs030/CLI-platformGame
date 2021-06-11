@@ -12,6 +12,7 @@ public class Model {
 	private Pleyer player;
 	private LinkedList<Enemy> enemy;
 	private LinkedList<LinkedList<Map>> maps;
+	private LinkedList<Bullet> bullets;
 
 	
 	public Model() {
@@ -20,6 +21,7 @@ public class Model {
 		this.player = new Pleyer();
 		this.enemy = new LinkedList<Enemy>();
 		this.maps = new LinkedList<LinkedList<Map>>();
+		this.bullets = new LinkedList<Bullet>();
 		for(int i=0;i<FLOOR;i++)
 			maps.add(new LinkedList<Map>());
 		player.paint(view);
@@ -29,13 +31,21 @@ public class Model {
 		/* 時間経過処理 */
 		if(event.equals("TIME_ELAPSED")) {
 			/* 床のスクロール処理 */
-			scrollMap(maps);
+			scrollMap();
 			
 			/* 自機の更新 */
 			player.update(view,WIDTH,HEIGHT);
 			
+			/*弾のスクロール処理*/
+			scrollBullets();
+
+			
+			/*敵と弾の当たり判定処理*/
+			enmeyIsHitBullet();
+			
 			/* 敵のスクロール処理 */
-			scrollEnemy(enemy);
+			scrollEnemy();
+			
 
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutScrean(WIDTH, HEIGHT)) { 
@@ -56,11 +66,34 @@ public class Model {
 			if(event.equals("w")) player.upPlayer(); // 上に移動
 			else if(event.equals("s")) player.downPlayer(); // 下に移動
 			else if(event.equals("j")) player.jumpPlayer(); // ジャンプ
+			else if(event.equals("b")) {
+				bullets.add(new Bullet(player.getX(),player.getY()));
+			}
 			enemy.add(makeEnemy()); // キー入力で敵がPOP
 		}
 		view.update();
 	}
 	
+
+	private void enmeyIsHitBullet() {
+		if(bullets.isEmpty())return ;
+		if(enemy.isEmpty())return ;
+		LinkedList<Enemy> new_es = new LinkedList<Enemy>();
+		LinkedList<Bullet> new_bs = new LinkedList<Bullet>();
+		for(Enemy e:enemy) {
+			if(!e.isHit(bullets))
+				new_es.add(e);
+		}
+		for(Bullet b:bullets) {
+			if(!b.isHit(enemy)) {
+				new_bs.add(b);
+			}
+		}
+		enemy = new_es;
+		bullets = new_bs;
+		
+	}
+
 	private void run() throws IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		controller.run();
@@ -78,9 +111,12 @@ public class Model {
 		return maps;
 	}
 	
-	public void scrollMap(LinkedList<LinkedList<Map>> obj) {
+	public LinkedList<Bullet> getBullets() {
+		return bullets;
+	}
+	public void scrollMap() {
 		// LinkedList<Map> すべての高さのMapを左へ一つスクロール
-		for(LinkedList<Map> ms:obj) {
+		for(LinkedList<Map> ms:maps) {
 			for(Map m:ms)	
 				m.update();
 			LinkedList<Map> new_map = new LinkedList<Map>();
@@ -90,19 +126,29 @@ public class Model {
 			ms = new_map;
 		}
 		/* すべての高さのMapの右端に床を追加 */
-		for(int i=0;i<obj.size();i++)
-			obj.get(i).add(makeMap(WIDTH,HEIGHT/FLOOR * (i+1)));// FLOER数で分割する
+		for(int i=0;i<maps.size();i++)
+			maps.get(i).add(makeMap(WIDTH,HEIGHT/FLOOR * (i+1)));// FLOER数で分割する
+	}
+
+	private void scrollBullets() {
+		for(Bullet b:bullets) {
+			b.update();
+		}
+		LinkedList<Bullet> new_bs = new LinkedList<Bullet>();
+		for(Bullet b:bullets)
+			if(!b.isOutScrean(WIDTH, HEIGHT))
+				new_bs.add(b);
+		bullets = new_bs;
 	}
 	
-	public void scrollEnemy(LinkedList<Enemy> obj) {
-		// LinkedList<Map> 
-		for(Enemy e:obj)
+	public void scrollEnemy() {
+		for(Enemy e:enemy)
 			e.update();
 		LinkedList<Enemy> new_enemy = new LinkedList<Enemy>();
-		for(Enemy e:obj)
+		for(Enemy e:enemy)
 			if(!e.isOutScrean(WIDTH,HEIGHT))
 				new_enemy.add(e);
-		obj = new_enemy;
+		enemy = new_enemy;
 	}
 	
 	public Map makeMap(int width,int height) {
@@ -117,5 +163,6 @@ public class Model {
 		Model model = new Model();
 		model.run();
 	}
+
 
 }

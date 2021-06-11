@@ -44,6 +44,8 @@ public class ConsoleView {
 				m.paint(this);
 		for(Enemy e:model.getEnemys())
 			e.paint(this);
+		for(Bullet b:model.getBullets())
+			b.paint(this);
 		model.getPlayer().paint(this);
 		paint();
 	}
