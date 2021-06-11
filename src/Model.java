@@ -7,6 +7,8 @@ public class Model {
 	private static final int WIDTH  = 80;
 	private static final int HEIGHT = 24;
 	private static final int FLOOR = 3; // 床の数
+	private static final double HOOL_PROBABILITY = 0.25; // 時間経過で穴が生成される確率
+	private static final double ENEMY_PROBABILITY = 0.8; // 時間経過で敵が生成される確率
 
 	private Random random = new Random();
 	private ConsoleView view;
@@ -44,6 +46,12 @@ public class Model {
 			
 			/* 敵のスクロール処理 */
 			scrollEnemy();
+			
+			/* 確率で穴を追加 */
+			hoolAddProbability();
+			
+			/* 確率で敵を追加 */
+			enemyAddProbability();
 
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutScrean(WIDTH, HEIGHT)) { 
@@ -71,8 +79,25 @@ public class Model {
 		}
 		view.update();
 	}
-	
 
+	private void enemyAddProbability() {
+		// TODO 自動生成されたメソッド・スタブ
+		double n = random.nextDouble();
+		if(n<HOOL_PROBABILITY) {
+			int i=random.nextInt(3)+1;
+			hool.add(new Hool(3,WIDTH,HEIGHT/FLOOR *(i)));
+		}
+		
+	}
+
+	private void hoolAddProbability() {
+		// TODO 自動生成されたメソッド・スタブ
+		double n = random.nextDouble();
+		if(n<ENEMY_PROBABILITY) {
+			enemy.add(makeEnemy());
+		}
+		
+	}
 
 	private void enmeyIsHitBullet() {
 		if(bullets.isEmpty())return ;
@@ -93,28 +118,6 @@ public class Model {
 		
 	}
 
-	private void run() throws IOException {
-		// TODO 自動生成されたメソッド・スタブ
-		controller.run();
-	}
-	
-	public Pleyer getPlayer() {
-		return player;
-	}
-	
-	public LinkedList<Enemy> getEnemys() {
-		return enemy;
-	}
-	
-	public LinkedList<Hool> getHool() {
-		// TODO 自動生成されたメソッド・スタブ
-		return hool;
-	}
-	
-	public LinkedList<Bullet> getBullets() {
-		return bullets;
-	}
-
 	private void scrollHool() {
 		for(Hool h:hool) {
 			h.update();
@@ -125,16 +128,7 @@ public class Model {
 				new_hs.add(h);
 		}
 		hool = new_hs;
-		
-		double n=random.nextDouble();
-		if(n<0.25) {
-			int i=random.nextInt(3)+1;
-			hool.add(new Hool(3,WIDTH,HEIGHT/FLOOR *(i)));
-			
-		}
-		
 	}
-
 
 	private void scrollBullets() {
 		for(Bullet b:bullets) {
@@ -161,10 +155,31 @@ public class Model {
 		return new Enemy(WIDTH,HEIGHT);
 	}
 	
+	public Pleyer getPlayer() {
+		return player;
+	}
+	
+	public LinkedList<Enemy> getEnemys() {
+		return enemy;
+	}
+	
+	public LinkedList<Hool> getHool() {
+		// TODO 自動生成されたメソッド・スタブ
+		return hool;
+	}
+	
+	public LinkedList<Bullet> getBullets() {
+		return bullets;
+	}
+
+	private void run() throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		controller.run();
+	}
+
 	public static void main(String[] args) throws IOException {
 		Model model = new Model();
 		model.run();
 	}
-
 
 }
