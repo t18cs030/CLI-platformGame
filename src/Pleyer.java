@@ -6,6 +6,7 @@ public class Pleyer {
 	private static final int FARST_Y = 10; // playerの自機の初期y座標 
 	private static final char FLOOR = '_';
 	private final static double jumpPower=-1.0;
+	private final static double G = 0.2;
 	private double dy;
 	private  char c;
 	private int x;
@@ -37,7 +38,7 @@ public class Pleyer {
 		// 床がないときに自由落下する
 		if(isOutScrean(width, height))return;
 		if(!isFloor(view,height)) {
-			dy +=0.1;
+			dy +=G;
 			y+=dy;
 		}
 		
@@ -66,7 +67,8 @@ public class Pleyer {
 				System.out.println("!!!!!!FLOOR!!!!!");
 				return true;
 			}
-		}return false;
+		}
+		return false;
 	}
 	
 	public boolean isHit(LinkedList<Enemy> es) {

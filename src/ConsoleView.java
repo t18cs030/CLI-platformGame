@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 
 public class ConsoleView {
 	
@@ -6,12 +5,14 @@ public class ConsoleView {
 	private Model model;
 	private int width;
 	private int height;
+	private int floor;
 
-	public ConsoleView(Model model, int width, int height) {
+	public ConsoleView(Model model, int width, int height,int floor) {
 		this.model = model;
 		this.width = width;
 		this.height = height;
 		this.screan = new char[width][height];
+		this.floor = floor;
 		clear();
 	}
 	
@@ -28,6 +29,11 @@ public class ConsoleView {
 		screan[x][y]=c;
 	}
 	
+	public void drawString(String s,int x,int y) {
+		for(int i=0;i<s.length();i++)
+			put(s.charAt(i),x+i,y);
+	}
+	
 	public void paint() {
 		for(int y=0; y< height; y++) {
 			for(int x=0; x<width ; x++) {
@@ -36,12 +42,22 @@ public class ConsoleView {
 			System.out.println(y);
 		}
 	}
+	public void putMap() {
+		int i=0;
+		for(int y=0;y<height;y++) {
+			if(y==height/floor *(i+1)-1) {
+				for(int x=0;x<width;x++)
+					put('_',x,y);
+				i++;
+			}
+		}
+	}
 
 	public void update() {
 		clear();
-		for(LinkedList<Map> ms:model.getMaps())
-			for(Map m:ms)
-				m.paint(this);
+		putMap();
+		for(Hool h:model.getHool())
+			h.paint(this);
 		for(Enemy e:model.getEnemys())
 			e.paint(this);
 		for(Bullet b:model.getBullets())
@@ -62,6 +78,7 @@ public class ConsoleView {
 		for(int x=0;x<10;x++) {
 			view.clear();
 			view.put('*',x,5);
+			view.drawString("   ", x, 10);
 			view.paint();
 			Thread.sleep(100);
 		}
