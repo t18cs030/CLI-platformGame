@@ -21,7 +21,8 @@ public class Pleyer {
 	}
 	
 	public void upPlayer() {
-		y -= 1; 
+		dy = -1.25;
+		y += dy; 
 	}
 	
 	public void downPlayer() {
