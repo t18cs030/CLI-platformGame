@@ -7,7 +7,6 @@ public class Model {
 	private static final int HEIGHT = 24;
 	private static final int FLOOR = 3; // 床の数
 
-
 	private ConsoleView view;
 	private ConsoleController controller;
 	private Pleyer player;
@@ -41,6 +40,14 @@ public class Model {
 			// 場外にでてゲームオーバーの処理
 			if(player.isOutScrean(WIDTH, HEIGHT)) { 
 				System.out.println("OUT!!");
+				controller.stop();
+				return ;
+			}
+			
+			// 敵に当たったらゲームオーバーの処理
+			if(player.isHit(enemy)) {
+				System.out.println("HIT!!");
+				controller.stop();
 				return ;
 			}
 		}
@@ -101,6 +108,7 @@ public class Model {
 	public Map makeMap(int width,int height) {
 		return new Map(width,height);
 	}
+	
 	public Enemy makeEnemy() {
 		return new Enemy(WIDTH,HEIGHT);
 	}

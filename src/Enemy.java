@@ -32,5 +32,10 @@ public class Enemy {
 		// TODO 自動生成されたメソッド・スタブ
 		return x<0 || width <= x || y<0 || height <= y;
 	}
-	
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
 }

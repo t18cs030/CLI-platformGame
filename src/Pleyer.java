@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 public class Pleyer {
 	
@@ -31,6 +32,7 @@ public class Pleyer {
 		dy = jumpPower;
 		y += dy;
 	}
+	
 	public void update(ConsoleView view,int width,int height) {
 		// 床がないときに自由落下する
 		if(isOutScrean(width, height))return;
@@ -38,6 +40,7 @@ public class Pleyer {
 			dy +=0.1;
 			y+=dy;
 		}
+		
 		else {
 			double n=y+dy;
 			if(Math.abs(dy)<1)n=y+1;
@@ -46,14 +49,15 @@ public class Pleyer {
 			dy=0.0;
 			for(int i=y;i<=n&&i<height;i++) {
 				if(view.getChar(x,y)==FLOOR) {
-					
 					y=i+1;
 				return;
 				}
 			}
 		}
-
 	}
+	
+	
+	
 	public boolean isFloor(ConsoleView view,int height) {
 		double n=y+dy;
 		if(Math.abs(dy)<1)n=y+1;
@@ -63,6 +67,17 @@ public class Pleyer {
 				return true;
 			}
 		}return false;
+	}
+	
+	public boolean isHit(LinkedList<Enemy> es) {
+		for(Enemy e:es) {
+			if(x == e.getX()) {
+				if(y==e.getY()) {
+					return true;
+				}
+			}
+		}; // 自機上の文字を読み込む
+		return false;
 	}
 	public boolean isOutScrean(int width,int height) {
 		return x<0 || width <= x || y < 0 || height <= y;
