@@ -2,11 +2,9 @@
 public class Hool {
 	//private final static char HOOL = ' ';
 	private String s;
-	private int n;
 	private int x,y;
 	
-	public Hool (int n, int x, int y) {
-		this.n=n;
+	public Hool (int x, int y) {
 		this.x=x-1;
 		this.y=y-1;
 		this.s = "       ";
@@ -18,7 +16,7 @@ public class Hool {
 		view.drawString(s, x, y);
 	}
 	public boolean isOutScrean(int width,int height) {
-		return x+n<0 ||width <= x || y<0 || height <= y;
+		return x+s.length()<0 ||width <= x || y<0 || height <= y;
 	}
 	
 }

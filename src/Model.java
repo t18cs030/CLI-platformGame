@@ -38,8 +38,10 @@ public class Model {
 			case Tital:
 				controller.stop();
 				view.setTital();
-				if(event.equals("s"))
+				if(event.equals("s")) {
+					controller.start();
 					gameMode=GameMode.Game;
+				}
 				break;
 				
 			case Game:
@@ -72,7 +74,6 @@ public class Model {
 						//view.setGameOver();
 						gameMode = GameMode.Result;
 						System.out.println("OUT!!");
-						controller.stop();
 					}
 					
 					// 敵に当たったらゲームオーバーの処理
@@ -80,7 +81,6 @@ public class Model {
 						//view.setGameOver();
 						gameMode = GameMode.Result;
 						System.out.println("HIT!!");
-						controller.stop();
 					}
 				}
 				/* キー入力処理 */
@@ -103,6 +103,7 @@ public class Model {
 				if(event.equals("r")) {
 					gameMode=GameMode.Game;
 					resetGame();
+					controller.start();
 				}
 				break;
 		}
@@ -122,7 +123,7 @@ public class Model {
 		double n = random.nextDouble();
 		if(n<HOOL_PROBABILITY) {
 			int i=random.nextInt(3)+1;
-			hool.add(new Hool(3,WIDTH,HEIGHT/FLOOR *(i)));
+			hool.add(new Hool(WIDTH,HEIGHT/FLOOR *(i)));
 		}
 		
 	}
