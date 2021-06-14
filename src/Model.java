@@ -19,6 +19,7 @@ public class Model {
 	private LinkedList<Hool> hool;
 	private LinkedList<Bullet> bullets;
 	private GameMode gameMode;
+	private int bulletHitCounts;
 
 	
 	public Model() {
@@ -29,7 +30,7 @@ public class Model {
 		this.enemy = new LinkedList<Enemy>();
 		this.bullets = new LinkedList<Bullet>();
 		this.hool = new LinkedList<Hool>();
-		player.paint(view);
+		this.bulletHitCounts=0;
 	}
 	
 	public void prosess(String event) {
@@ -111,6 +112,7 @@ public class Model {
 		enemy.clear();
 		bullets.clear();
 		hool.clear();
+		bulletHitCounts=0;
 		
 	}
 
@@ -145,6 +147,8 @@ public class Model {
 		for(Bullet b:bullets) {
 			if(!b.isHit(enemy)) {
 				new_bs.add(b);
+			}else {
+				bulletHitCounts++;
 			}
 		}
 		enemy = new_es;
@@ -204,6 +208,9 @@ public class Model {
 	
 	public LinkedList<Bullet> getBullets() {
 		return bullets;
+	}
+	public int getBulletHitCounts() {
+		return bulletHitCounts;
 	}
 
 	private void run() throws IOException {

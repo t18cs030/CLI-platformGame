@@ -68,9 +68,11 @@ public class ConsoleView {
 
 	public void setGameOver() {
 		clear();
-		drawString("Game Over",10,10);
-		drawString("Restart: r",20,15);
-		drawString("Finish: Ctrl-C",20,18);
+		drawString("Game Over",32,5);
+		drawString("youre score:", 30,10);
+		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
+		drawString("Restart: r",32,15);
+		drawString("Finish: Ctrl-C",32,18);
 		paint();
 	}
 	
@@ -84,7 +86,15 @@ public class ConsoleView {
 		for(Bullet b:model.getBullets())
 			b.paint(this);
 		model.getPlayer().paint(this);
+		showBulletHitCounts(model.getBulletHitCounts());
 		paint();
+	}
+	
+	public void showBulletHitCounts(int bulletHitCounts) {
+		// TODO 自動生成されたメソッド・スタブ
+		drawString("hit : ",60,0);
+		drawString(String.valueOf(bulletHitCounts),68,0);
+		
 	}
 	
 	// デバック用
@@ -109,6 +119,7 @@ public class ConsoleView {
 		// TODO 自動生成されたメソッド・スタブ
 		return screan[x][y];
 	}
+
 
 	
 }
