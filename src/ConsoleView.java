@@ -55,12 +55,13 @@ public class ConsoleView {
 
 	public void setTital() {
 		clear();
-		drawString("D run",10,10);
-		drawString("start: sキー",20,15);
-		drawString("up: w",40,10);
-		drawString("down: s",40,11);
-		drawString("bullet: b",40,12);
-		drawString("jump: p",40,13);
+		drawString("D run",30,5);
+		drawString("start: s",20,12);
+		drawString("-操作方法-",38,10);
+		drawString("up: w",40,11);
+		drawString("down: s",40,12);
+		drawString("jump: j",40,13);
+		drawString("bullet: b",40,14);
 		paint();
 		
 	}
