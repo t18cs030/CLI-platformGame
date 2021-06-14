@@ -104,9 +104,6 @@ public class Model {
 					gameMode=GameMode.Game;
 					resetGame();
 				}
-				else if(event.equals("e")) {
-					return ;
-				}
 				break;
 		}
 	}

@@ -84,11 +84,21 @@ public class Pleyer {
 	
 	public boolean isHit(LinkedList<Enemy> es) {
 		// 自機上の文字を読み込む
+		int i=0,n=0;
 		for(Enemy e:es) {
-			if(x == e.getX() && y==e.getY()) {
-					return true;
-				}
+			if(dy<0) {
+				i=y+(int)dy;
+				n=y;
+			}else {
+				i=y;
+				n=y+(int)dy;
 			}
+			for(;i<=n;i++) {
+				if(x == e.getX() && i==e.getY()) {
+					return true;
+				}	
+			}
+		}
 		return false;
 	}
 	public boolean isOutScrean(int width,int height) {

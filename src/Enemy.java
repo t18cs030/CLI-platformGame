@@ -44,7 +44,7 @@ public class Enemy {
 	}
 	public boolean isHit(LinkedList<Bullet> bullets) {
 		for(Bullet b:bullets)
-			if((x==b.getX()&&y==b.getY())||(x==b.getX()+1&&y==b.getY()))
+			if((x==b.getX()&&y==b.getY())||(x-1==b.getX()&&y==b.getY()))
 				return true;
 		return false;
 	}
