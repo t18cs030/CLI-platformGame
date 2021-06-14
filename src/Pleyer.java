@@ -7,6 +7,7 @@ public class Pleyer {
 	private static final char FLOOR = '_';
 	private final static double jumpPower=-1.0;
 	private final static double G = 0.2;
+	private boolean isJump;
 	private double dy;
 	private  char c;
 	private int x;
@@ -15,24 +16,32 @@ public class Pleyer {
 	public Pleyer() {
 		// TODO 自動生成されたコンストラクター・スタブ
 		this.c='@';
+		this.isJump=false;
 		this.dy=0.0;
 		this.x=FARST_X;
 		this.y=FARST_Y;
 	}
 	
 	public void upPlayer() {
-		dy = -1.25;
-		y += dy; 
+		if(isJump) {
+			dy = -1.25;
+			y += dy; 
+			isJump=false;
+		}
 	}
 	
 	public void downPlayer() {
 		dy = 1.0;
 		y += 1;
+		isJump=false;
 	}
 	
 	public void jumpPlayer() {
-		dy = jumpPower;
-		y += dy;
+		if(isJump) {
+			dy = jumpPower;
+			y += dy;
+			isJump=false;
+		}
 	}
 	
 	public void update(ConsoleView view,int width,int height) {
@@ -44,6 +53,7 @@ public class Pleyer {
 		}
 		
 		else {
+			isJump=true;
 			double n=y+dy;
 			if(Math.abs(dy)<1)n=y+1;
 			
@@ -92,5 +102,10 @@ public class Pleyer {
 	}
 	public int getY() {
 		return y;
+	}
+
+	public void set() {
+		x=FARST_X;
+		y=FARST_Y;
 	}
 }

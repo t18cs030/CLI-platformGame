@@ -102,14 +102,22 @@ public class Model {
 				view.setGameOver();
 				if(event.equals("r")) {
 					gameMode=GameMode.Game;
-					
+					resetGame();
 				}
 				else if(event.equals("e")) {
-					//controller=null;
 					return ;
 				}
 				break;
 		}
+	}
+
+	private void resetGame() {
+		// TODO 自動生成されたメソッド・スタブ
+		player.set();
+		enemy.clear();
+		bullets.clear();
+		hool.clear();
+		
 	}
 
 	private void enemyAddProbability() {
