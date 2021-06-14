@@ -19,7 +19,7 @@ public class ConsoleView {
 	public void clear() {
 		for(int y=0; y<height;y++) {
 			for(int x=0;x<width;x++) {
-				screan[x][y] = '-';
+				screan[x][y] = ' ';
 			}
 		}
 	}
@@ -53,6 +53,22 @@ public class ConsoleView {
 		}
 	}
 
+	public void setTital() {
+		clear();
+		drawString("D run",10,10);
+		drawString("start: sキー",20,15);
+		paint();
+		
+	}
+
+	public void setGameOver() {
+		clear();
+		drawString("Game Over",10,10);
+		drawString("Restart: r",20,15);
+		drawString("Finish: Ctrl-C",20,18);
+		paint();
+	}
+	
 	public void update() {
 		clear();
 		putMap();
@@ -88,5 +104,6 @@ public class ConsoleView {
 		// TODO 自動生成されたメソッド・スタブ
 		return screan[x][y];
 	}
+
 	
 }

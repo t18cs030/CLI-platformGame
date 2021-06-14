@@ -38,6 +38,7 @@ public class ConsoleController implements ActionListener {
 		model.prosess("TIME_ELAPSED");
 	}
 	
+	public void start() { timer.start(); }
 	public void stop() { timer.stop(); }
 	
 	// デバック用

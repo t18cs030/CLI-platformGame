@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Model {
 
+	enum GameMode{ Tital,Game,Result};
 	private static final int WIDTH  = 80;
 	private static final int HEIGHT = 24;
 	private static final int FLOOR = 3; // 床の数
@@ -17,9 +18,11 @@ public class Model {
 	private LinkedList<Enemy> enemy;
 	private LinkedList<Hool> hool;
 	private LinkedList<Bullet> bullets;
+	private GameMode gameMode;
 
 	
 	public Model() {
+		this.gameMode=GameMode.Tital;
 		this.view = new ConsoleView(this,WIDTH,HEIGHT,FLOOR);
 		this.controller = new ConsoleController(this);
 		this.player = new Pleyer();
@@ -30,54 +33,83 @@ public class Model {
 	}
 	
 	public void prosess(String event) {
-		/* 時間経過処理 */
-		if(event.equals("TIME_ELAPSED")) {
-			/* 床のスクロール処理 */
-			scrollHool();
-			
-			/* 自機の更新 */
-			player.update(view,WIDTH,HEIGHT);
-			
-			/*弾のスクロール処理*/
-			scrollBullets();
-			
-			/*敵と弾の当たり判定処理*/
-			enmeyIsHitBullet();
-			
-			/* 敵のスクロール処理 */
-			scrollEnemy();
-			
-			/* 確率で穴を追加 */
-			hoolAddProbability();
-			
-			/* 確率で敵を追加 */
-			enemyAddProbability();
-
-			// 場外にでてゲームオーバーの処理
-			if(player.isOutScrean(WIDTH, HEIGHT)) { 
-				System.out.println("OUT!!");
+		
+		switch(gameMode){
+			case Tital:
 				controller.stop();
-				return ;
-			}
-			
-			// 敵に当たったらゲームオーバーの処理
-			if(player.isHit(enemy)) {
-				System.out.println("HIT!!");
+				view.setTital();
+				if(event.equals("s"))
+					gameMode=GameMode.Game;
+				break;
+				
+			case Game:
+				controller.start();
+				/* 時間経過処理 */
+				if(event.equals("TIME_ELAPSED")) {
+					/* 床のスクロール処理 */
+					scrollHool();
+					
+					/* 自機の更新 */
+					player.update(view,WIDTH,HEIGHT);
+					
+					/*弾のスクロール処理*/
+					scrollBullets();
+					
+					/*敵と弾の当たり判定処理*/
+					enmeyIsHitBullet();
+					
+					/* 敵のスクロール処理 */
+					scrollEnemy();
+					
+					/* 確率で穴を追加 */
+					hoolAddProbability();
+					
+					/* 確率で敵を追加 */
+					enemyAddProbability();
+					
+					// 場外にでてゲームオーバーの処理
+					if(player.isOutScrean(WIDTH, HEIGHT)) { 
+						//view.setGameOver();
+						gameMode = GameMode.Result;
+						System.out.println("OUT!!");
+						controller.stop();
+					}
+					
+					// 敵に当たったらゲームオーバーの処理
+					if(player.isHit(enemy)) {
+						//view.setGameOver();
+						gameMode = GameMode.Result;
+						System.out.println("HIT!!");
+						controller.stop();
+					}
+				}
+				/* キー入力処理 */
+				else {
+					if(event.equals("w")) player.upPlayer(); // 上に移動
+					else if(event.equals("s")) player.downPlayer(); // 下に移動
+					else if(event.equals("j")) player.jumpPlayer(); // ジャンプ
+					else if(event.equals("b")) {
+						bullets.add(new Bullet(player.getX(),player.getY()));
+					}
+					enemy.add(makeEnemy()); // キー入力で敵がPOP
+				}
+					view.update();
+				
+				break;
+				
+			case Result:
 				controller.stop();
-				return ;
-			}
+				view.setGameOver();
+				if(event.equals("r")) {
+					gameMode=GameMode.Game;
+					
+				}
+				else if(event.equals("e")) {
+					//controller=null;
+					return ;
+				}
+				break;
 		}
-		/* キー入力処理 */
-		else {
-			if(event.equals("w")) player.upPlayer(); // 上に移動
-			else if(event.equals("s")) player.downPlayer(); // 下に移動
-			else if(event.equals("j")) player.jumpPlayer(); // ジャンプ
-			else if(event.equals("b")) {
-				bullets.add(new Bullet(player.getX(),player.getY()));
-			}
-			enemy.add(makeEnemy()); // キー入力で敵がPOP
-		}
-		view.update();
 	}
 
 	private void enemyAddProbability() {
