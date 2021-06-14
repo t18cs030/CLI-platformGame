@@ -71,16 +71,12 @@ public class Model {
 					
 					// 場外にでてゲームオーバーの処理
 					if(player.isOutScrean(WIDTH, HEIGHT)) { 
-						//view.setGameOver();
 						gameMode = GameMode.Result;
-						System.out.println("OUT!!");
 					}
 					
 					// 敵に当たったらゲームオーバーの処理
 					if(player.isHit(enemy)) {
-						//view.setGameOver();
 						gameMode = GameMode.Result;
-						System.out.println("HIT!!");
 					}
 				}
 				/* キー入力処理 */

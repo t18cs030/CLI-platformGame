@@ -75,7 +75,6 @@ public class Pleyer {
 		if(Math.abs(dy)<1)n=y+1;
 		for(int i=y;i<=n&&i<height;i++) {
 			if(view.getChar(x, i)==FLOOR) {
-				System.out.println("!!!!!!FLOOR!!!!!");
 				return true;
 			}
 		}
