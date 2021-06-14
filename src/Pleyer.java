@@ -60,8 +60,8 @@ public class Pleyer {
 			//先にdyの初期化するとSキーで跳ね上がるエラーを防げる
 			dy=0.0;
 			for(int i=y;i<=n&&i<height;i++) {
-				if(view.getChar(x,y)==FLOOR) {
-					y=i+1;
+				if(view.getChar(x,i)==FLOOR) {
+					y=i-1;
 				return;
 				}
 			}
