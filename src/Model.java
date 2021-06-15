@@ -20,9 +20,10 @@ public class Model {
 	private LinkedList<Bullet> bullets;
 	private GameMode gameMode;
 	private int bulletHitCounts;
+	private ReadDj ranking;
 
 	
-	public Model() {
+	public Model() throws IOException {
 		this.gameMode=GameMode.Tital;
 		this.view = new ConsoleView(this,WIDTH,HEIGHT,FLOOR);
 		this.controller = new ConsoleController(this);
@@ -31,6 +32,7 @@ public class Model {
 		this.bullets = new LinkedList<Bullet>();
 		this.hool = new LinkedList<Hool>();
 		this.bulletHitCounts=0;
+		this.ranking = new ReadDj("ranking.txt");
 	}
 	
 	public void prosess(String event) {
@@ -42,6 +44,16 @@ public class Model {
 				if(event.equals("s")) {
 					controller.start();
 					gameMode=GameMode.Game;
+				}
+				break;
+				
+			case Result:
+				controller.stop();
+				view.setGameOver(ranking.getRanking());
+				if(event.equals("r")) {
+					gameMode=GameMode.Game;
+					resetGame();
+					controller.start();
 				}
 				break;
 				
@@ -73,11 +85,21 @@ public class Model {
 					// 場外にでてゲームオーバーの処理
 					if(player.isOutScrean(WIDTH, HEIGHT)) { 
 						gameMode = GameMode.Result;
+						try {
+							   ranking.updateRanking(bulletHitCounts);
+							} catch (IOException e) {
+						    	e.printStackTrace();
+						    } 
 					}
 					
 					// 敵に当たったらゲームオーバーの処理
 					if(player.isHit(enemy)) {
 						gameMode = GameMode.Result;
+						try {
+							   ranking.updateRanking(bulletHitCounts);
+							} catch (IOException e) {
+						    	e.printStackTrace();
+						    } 
 					}
 				}
 				/* キー入力処理 */
@@ -92,17 +114,8 @@ public class Model {
 				}
 					view.update();
 				
-				break;
-				
-			case Result:
-				controller.stop();
-				view.setGameOver();
-				if(event.equals("r")) {
-					gameMode=GameMode.Game;
-					resetGame();
-					controller.start();
-				}
-				break;
+				break;				
+
 		}
 	}
 

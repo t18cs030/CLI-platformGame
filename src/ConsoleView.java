@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class ConsoleView {
 	
@@ -66,16 +67,26 @@ public class ConsoleView {
 		
 	}
 
-	public void setGameOver() {
+	public void setGameOver(List<Integer> rank) {
 		clear();
 		drawString("Game Over",32,5);
 		drawString("youre score:", 30,10);
 		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
-		drawString("Restart: r",32,15);
-		drawString("Finish: Ctrl-C",32,18);
+		drawString("Restart: r",32,19);
+		drawString("Finish: Ctrl-C",32,20);
+		drawRanking(rank);
 		paint();
 	}
 	
+	private void drawRanking(List<Integer> rank) {
+		// TODO 自動生成されたメソッド・スタブ
+		drawString("high score:",30,12);
+		for(int i=0;i<rank.size();i++) {
+			drawString(String.valueOf(rank.get(i)),45,12+i);
+		}
+		
+	}
+
 	public void update() {
 		clear();
 		putMap();
