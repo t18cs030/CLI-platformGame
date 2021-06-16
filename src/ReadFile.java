@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ReadDj {
+public class ReadFile {
 	
 	private static final int SHOW_RANK = 5;
 	private File file; 
@@ -16,7 +16,7 @@ public class ReadDj {
 	private List<String> textL ;
 	private List<Integer> textInt;
 
-	public ReadDj(String s) throws IOException {
+	public ReadFile(String s) throws IOException {
 		this.file = new File("ranking.txt");
 		this.Pfile = Paths.get("ranking.txt");
 		this.textL = Files.readAllLines(Pfile);
