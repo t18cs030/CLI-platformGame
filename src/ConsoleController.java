@@ -21,8 +21,8 @@ public class ConsoleController implements ActionListener {
 	public void start() { timer.start(); }
 	public void stop() { timer.stop(); }
 
+	// キー入力の処理
 	public void run() throws IOException {
-		// キー入力の処理
 		timer.start();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String line = null;
@@ -30,9 +30,9 @@ public class ConsoleController implements ActionListener {
 			model.prosess(line);
 	}
 
+	// 時間経過の処理
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// 時間経過の処理
 		model.prosess("TIME_ELAPSED");
 	}
 	
