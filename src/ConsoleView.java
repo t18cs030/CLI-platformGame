@@ -7,8 +7,7 @@ public class ConsoleView {
 	private Model model;
 	private int width;
 	private int height;
-	private int floor;
-	private ArrayList<Integer> rank;
+	private int floor; // 床の枚数を保存
 
 	public ConsoleView(Model model, int width, int height,int floor) {
 		this.model = model;
@@ -16,10 +15,10 @@ public class ConsoleView {
 		this.height = height;
 		this.screan = new char[width][height];
 		this.floor = floor;
-		this.rank = new ArrayList<Integer>();
 		clear();
 	}
 	
+	/* 画面をクリアする */
 	public void clear() {
 		for(int y=0; y<height;y++) {
 			for(int x=0;x<width;x++) {
@@ -28,24 +27,24 @@ public class ConsoleView {
 		}
 	}
 	
+	/* x,y に文字を代入する */
 	public void put(char c,int x,int y) {
 		if( x<0 || x>=width || y<0 || y>=height) return ;
 		screan[x][y]=c;
 	}
 	
+	/* x,y から文章を画面に表示する */
 	public void drawString(String s,int x,int y) {
 		for(int i=0;i<s.length();i++)
 			put(s.charAt(i),x+i,y);
 	}
 	
-	public void paint() {
-		for(int y=0; y< height; y++) {
-			for(int x=0; x<width ; x++) {
-				System.out.print(screan[x][y]);
-			}
-			System.out.println(y);
-		}
+	/* (x,y)のキャラクタを返す */
+	public char getChar(int x, int y) {
+		return screan[x][y];
 	}
+	
+	/* 画面に床を置く */
 	public void putMap() {
 		int i=0;
 		for(int y=0;y<height;y++) {
@@ -56,7 +55,25 @@ public class ConsoleView {
 			}
 		}
 	}
+	
+	/* 敵と弾の当たった回数を表示 */
+	public void showBulletHitCounts(int bulletHitCounts) {
+		// TODO 自動生成されたメソッド・スタブ
+		drawString("hit : ",60,0);
+		drawString(String.valueOf(bulletHitCounts),68,0);
+	}
+	
+	/* ランキングの表示 */
+	private void drawRanking(ArrayList<Integer> rank) {
+		// TODO 自動生成されたメソッド・スタブ
+		drawString("high score:",30,12);
+		for(int i=0;i<rank.size();i++) {
+			drawString(String.valueOf(rank.get(i)),45,12+i);
+		}
+		
+	}
 
+	/* タイトル画面の表示 */
 	public void setTital() {
 		clear();
 		drawString("D run",30,5);
@@ -69,37 +86,8 @@ public class ConsoleView {
 		paint();
 		
 	}
-
-	public void setGameOver(ArrayList<Integer> rank) {
-		clear();
-		drawString("Game Over",32,5);
-		drawString("youre score:", 30,10);
-		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
-		drawString("Restart: r",32,19);
-		drawString("Finish: Ctrl-C",32,20);
-		drawRanking();
-		paint();
-	}
 	
-	public void setGameOver() {
-		clear();
-		drawString("Game Over",32,5);
-		drawString("youre score:", 30,10);
-		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
-		drawString("Restart: r",32,19);
-		drawString("Finish: Ctrl-C",32,20);
-		drawRanking();
-		paint();
-	}
-	private void drawRanking() {
-		// TODO 自動生成されたメソッド・スタブ
-		drawString("high score:",30,12);
-		for(int i=0;i<rank.size();i++) {
-			drawString(String.valueOf(rank.get(i)),45,12+i);
-		}
-		
-	}
-
+	/* ゲーム画面の表示 */
 	public void update() {
 		clear();
 		putMap();
@@ -114,22 +102,29 @@ public class ConsoleView {
 		paint();
 	}
 	
-	public void showBulletHitCounts(int bulletHitCounts) {
-		// TODO 自動生成されたメソッド・スタブ
-		drawString("hit : ",60,0);
-		drawString(String.valueOf(bulletHitCounts),68,0);
-		
-	}
-
-	public char getChar(int x, int y) {
-		// TODO 自動生成されたメソッド・スタブ
-		return screan[x][y];
+	/* リザルト画面の表示 */
+	public void setGameOver(ArrayList<Integer> rank) {
+		clear();
+		drawString("Game Over",32,5);
+		drawString("youre score:", 30,10);
+		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
+		drawString("Restart: r",32,19);
+		drawString("Finish: Ctrl-C",32,20);
+		drawRanking(rank);
+		paint();
 	}
 	
-	public void setRank(ArrayList<Integer> list) {
-		// TODO 自動生成されたメソッド・スタブ
-		this.rank = list;
+	/* コンソール画面に表示 */
+	public void paint() {
+		for(int y=0; y< height; y++) {
+			for(int x=0; x<width ; x++) {
+				System.out.print(screan[x][y]);
+			}
+			System.out.println(y);
+		}
 	}
+	
+
 	
 	// デバック用
 	public ConsoleView() {

@@ -1,46 +1,63 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class ReadFile {
 	
 	private static final int SHOW_RANK = 5;
-	private File file; 
-	private Path Pfile;
-	private List<String> textL ;
-	private List<Integer> textInt;
+	private File file ;
+	private ArrayList<Integer> textInt;
 
-	public ReadFile(String s) throws IOException {
-		this.file = new File("ranking.txt");
-		this.Pfile = Paths.get("ranking.txt");
-		this.textL = Files.readAllLines(Pfile);
+	public ReadFile(String s){
+		this.file = new File(s);
 		this.textInt = new ArrayList<Integer>();
-		for(String str:textL)
-			textInt.add(Integer.parseInt(str));
-		
+		setRanking();
 	}
-	public void updateRanking(int score)throws IOException {
+	
+	public void setRanking() {
+		try {
+			FileReader reader = new FileReader(file);
+			BufferedReader br = new BufferedReader(reader);
+			String text;
+			while((text = br.readLine()) != null) {
+				textInt.add(Integer.valueOf(text));
+			}
+			reader.close();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateRanking(int score){
 		textInt.add(score);
 		Collections.sort(textInt,Collections.reverseOrder());
 
-		FileWriter filewriter = new FileWriter(file);
-		for(int i=0;i<SHOW_RANK;i++)
-			filewriter.write(String.valueOf(textInt.get(i))+"\n");
-		filewriter.close();
-		
+		try {
+			FileWriter filewriter = new FileWriter(file);
+			for(int i=0;i<SHOW_RANK;i++)
+				filewriter.write(String.valueOf(textInt.get(i))+"\n");
+			filewriter.close();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 	}
+	
+
 	public ArrayList<Integer> getRanking(){
+		
 		ArrayList<Integer> rank = new ArrayList<Integer>();
 		for(int i=0;i<SHOW_RANK;i++)
 			rank.add(textInt.get(i));
 		return rank;
 	}
+	
+	// 動作確認用
 	public static void main(String[] args) throws IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		
@@ -50,24 +67,6 @@ public class ReadFile {
 			System.out.println(n);
 		System.out.println();
 		file.show();
-		//Path Pfile = Paths.get("ranking.txt");
-		//List<String> textL = Files.readAllLines(Pfile);
-		//ArrayList<Integer> textInt = new ArrayList<Integer>();
-		//for(String s:textL)
-			//textInt.add(Integer.parseInt(s));
-		
-		// write file
-		// File file = new File("ranking.txt");
-		//FileWriter filewriter = new FileWriter(file);
-		//int n = 22;
-		//textInt.add(n);
-		//Collections.sort(textInt,Collections.reverseOrder());
-		//for(int num :textInt)
-			//System.out.println(num);
-		//textL.toString();
-		//for(int i=0;i<5;i++)
-			//filewriter.write(String.valueOf(textInt.get(i))+"\n");
-		//filewriter.close();
 	}
 	private void show() {
 		// TODO 自動生成されたメソッド・スタブ
