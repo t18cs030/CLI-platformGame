@@ -136,6 +136,18 @@ public class ModelTest {
 		model.prosess("r");
 		assertEquals(Game,model.getGameMode());
 	}
+	@Test
+	public void resultでrが押されてたら床と敵と弾とHitカウントが初期値に戻る() {
+		Model model = new Model();
+		model.setGameModeResult();
+		assertEquals(Result,model.getGameMode());
+		model.prosess("r");
+		assertEquals(Game,model.getGameMode());
+		assertEquals(true,model.getHool().isEmpty());
+		assertEquals(true,model.getEnemys().isEmpty());
+		assertEquals(true,model.getBullets().isEmpty());
+		assertEquals(0,model.getBulletHitCounts());
+	}
 
 
 	
