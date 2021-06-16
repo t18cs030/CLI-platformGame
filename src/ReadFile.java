@@ -35,8 +35,8 @@ public class ReadFile {
 		filewriter.close();
 		
 	}
-	public List<Integer> getRanking(){
-		List<Integer> rank = new ArrayList<Integer>();
+	public ArrayList<Integer> getRanking(){
+		ArrayList<Integer> rank = new ArrayList<Integer>();
 		for(int i=0;i<SHOW_RANK;i++)
 			rank.add(textInt.get(i));
 		return rank;
@@ -44,26 +44,37 @@ public class ReadFile {
 	public static void main(String[] args) throws IOException {
 		// TODO 自動生成されたメソッド・スタブ
 		
-		File file = new File("ranking.txt");
-
-		Path Pfile = Paths.get("ranking.txt");
-		List<String> textL = Files.readAllLines(Pfile);
-		ArrayList<Integer> textInt = new ArrayList<Integer>();
-		for(String s:textL)
-			textInt.add(Integer.parseInt(s));
+		ReadFile file = new ReadFile("ranking.txt");
+		ArrayList<Integer> ai = file.getRanking();
+		for(Integer n:ai)
+			System.out.println(n);
+		System.out.println();
+		file.show();
+		//Path Pfile = Paths.get("ranking.txt");
+		//List<String> textL = Files.readAllLines(Pfile);
+		//ArrayList<Integer> textInt = new ArrayList<Integer>();
+		//for(String s:textL)
+			//textInt.add(Integer.parseInt(s));
 		
 		// write file
 		// File file = new File("ranking.txt");
-		FileWriter filewriter = new FileWriter(file);
-		int n = 22;
-		textInt.add(n);
-		Collections.sort(textInt,Collections.reverseOrder());
-		for(int num :textInt)
-			System.out.println(num);
-		textL.toString();
-		for(int i=0;i<5;i++)
-			filewriter.write(String.valueOf(textInt.get(i))+"\n");
-		filewriter.close();
+		//FileWriter filewriter = new FileWriter(file);
+		//int n = 22;
+		//textInt.add(n);
+		//Collections.sort(textInt,Collections.reverseOrder());
+		//for(int num :textInt)
+			//System.out.println(num);
+		//textL.toString();
+		//for(int i=0;i<5;i++)
+			//filewriter.write(String.valueOf(textInt.get(i))+"\n");
+		//filewriter.close();
+	}
+	private void show() {
+		// TODO 自動生成されたメソッド・スタブ
+		for(Integer n:textInt) {
+			System.out.println(n);
+		}
+		
 	}
 
 }

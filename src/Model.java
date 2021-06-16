@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -20,7 +21,8 @@ public class Model {
 	private LinkedList<Bullet> bullets;
 	private GameMode gameMode;
 	private int bulletHitCounts;
-	//private ReadDj ranking;
+	private ReadFile ranking;
+	private ArrayList<Integer> rank;
 
 	
 	public Model() {
@@ -32,12 +34,12 @@ public class Model {
 		this.bullets = new LinkedList<Bullet>();
 		this.hool = new LinkedList<Hool>();
 		this.bulletHitCounts=0;
-//		try {
-//			this.ranking = new ReadDj("ranking.txt");
-//		} catch (IOException e) {
-//			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-//		}
+		try {
+			this.ranking = new ReadFile("ranking.txt");
+			this.rank = ranking.getRanking();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void prosess(String event) {
@@ -54,8 +56,8 @@ public class Model {
 				
 			case Result:
 				controller.stop();
+				view.setRank(rank);
 				view.setGameOver();
-				//view.setGameOver(ranking.getRanking());
 				if(event.equals("r")) {
 					gameMode=GameMode.Game;
 					resetGame();

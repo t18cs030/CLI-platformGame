@@ -1,4 +1,5 @@
-import java.util.List;
+import java.util.ArrayList;
+
 
 public class ConsoleView {
 	
@@ -7,6 +8,7 @@ public class ConsoleView {
 	private int width;
 	private int height;
 	private int floor;
+	private ArrayList<Integer> rank;
 
 	public ConsoleView(Model model, int width, int height,int floor) {
 		this.model = model;
@@ -14,6 +16,7 @@ public class ConsoleView {
 		this.height = height;
 		this.screan = new char[width][height];
 		this.floor = floor;
+		this.rank = new ArrayList<Integer>();
 		clear();
 	}
 	
@@ -67,14 +70,14 @@ public class ConsoleView {
 		
 	}
 
-	public void setGameOver(List<Integer> rank) {
+	public void setGameOver(ArrayList<Integer> rank) {
 		clear();
 		drawString("Game Over",32,5);
 		drawString("youre score:", 30,10);
 		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
 		drawString("Restart: r",32,19);
 		drawString("Finish: Ctrl-C",32,20);
-		drawRanking(rank);
+		drawRanking();
 		paint();
 	}
 	
@@ -85,9 +88,10 @@ public class ConsoleView {
 		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
 		drawString("Restart: r",32,19);
 		drawString("Finish: Ctrl-C",32,20);
+		drawRanking();
 		paint();
 	}
-	private void drawRanking(List<Integer> rank) {
+	private void drawRanking() {
 		// TODO 自動生成されたメソッド・スタブ
 		drawString("high score:",30,12);
 		for(int i=0;i<rank.size();i++) {
@@ -116,6 +120,16 @@ public class ConsoleView {
 		drawString(String.valueOf(bulletHitCounts),68,0);
 		
 	}
+
+	public char getChar(int x, int y) {
+		// TODO 自動生成されたメソッド・スタブ
+		return screan[x][y];
+	}
+	
+	public void setRank(ArrayList<Integer> list) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.rank = list;
+	}
 	
 	// デバック用
 	public ConsoleView() {
@@ -135,10 +149,6 @@ public class ConsoleView {
 		}
 	}
 
-	public char getChar(int x, int y) {
-		// TODO 自動生成されたメソッド・スタブ
-		return screan[x][y];
-	}
 
 
 	
