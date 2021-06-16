@@ -78,6 +78,15 @@ public class ConsoleView {
 		paint();
 	}
 	
+	public void setGameOver() {
+		clear();
+		drawString("Game Over",32,5);
+		drawString("youre score:", 30,10);
+		drawString(String.valueOf(model.getBulletHitCounts()),45,10);
+		drawString("Restart: r",32,19);
+		drawString("Finish: Ctrl-C",32,20);
+		paint();
+	}
 	private void drawRanking(List<Integer> rank) {
 		// TODO 自動生成されたメソッド・スタブ
 		drawString("high score:",30,12);

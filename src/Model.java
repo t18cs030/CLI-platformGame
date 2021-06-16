@@ -20,10 +20,10 @@ public class Model {
 	private LinkedList<Bullet> bullets;
 	private GameMode gameMode;
 	private int bulletHitCounts;
-	private ReadDj ranking;
+	//private ReadDj ranking;
 
 	
-	public Model() throws IOException {
+	public Model() {
 		this.gameMode=GameMode.Tital;
 		this.view = new ConsoleView(this,WIDTH,HEIGHT,FLOOR);
 		this.controller = new ConsoleController(this);
@@ -32,7 +32,12 @@ public class Model {
 		this.bullets = new LinkedList<Bullet>();
 		this.hool = new LinkedList<Hool>();
 		this.bulletHitCounts=0;
-		this.ranking = new ReadDj("ranking.txt");
+//		try {
+//			this.ranking = new ReadDj("ranking.txt");
+//		} catch (IOException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void prosess(String event) {
@@ -49,7 +54,8 @@ public class Model {
 				
 			case Result:
 				controller.stop();
-				view.setGameOver(ranking.getRanking());
+				view.setGameOver();
+				//view.setGameOver(ranking.getRanking());
 				if(event.equals("r")) {
 					gameMode=GameMode.Game;
 					resetGame();
@@ -61,6 +67,32 @@ public class Model {
 				controller.start();
 				/* 時間経過処理 */
 				if(event.equals("TIME_ELAPSED")) {
+
+					// 場外にでてゲームオーバーの処理
+					if(player.isOutScrean(WIDTH, HEIGHT)) { 
+						gameMode = GameMode.Result;
+//						try {
+//							   ranking.updateRanking(bulletHitCounts);
+//							} catch (IOException e) {
+//						    	e.printStackTrace();
+//						    } 
+						return;
+					}
+					
+					// 敵に当たったらゲームオーバーの処理
+					if(player.isHit(enemy)) {
+						gameMode = GameMode.Result;
+//						try {
+//							   ranking.updateRanking(bulletHitCounts);
+//							} catch (IOException e) {
+//						    	e.printStackTrace();
+//						    } 
+						return;
+					}
+					
+					/*敵と弾の当たり判定処理*/
+					enmeyIsHitBullet();
+
 					/* 床のスクロール処理 */
 					scrollHool();
 					
@@ -69,9 +101,6 @@ public class Model {
 					
 					/*弾のスクロール処理*/
 					scrollBullets();
-					
-					/*敵と弾の当たり判定処理*/
-					enmeyIsHitBullet();
 					
 					/* 敵のスクロール処理 */
 					scrollEnemy();
@@ -82,25 +111,6 @@ public class Model {
 					/* 確率で敵を追加 */
 					enemyAddProbability();
 					
-					// 場外にでてゲームオーバーの処理
-					if(player.isOutScrean(WIDTH, HEIGHT)) { 
-						gameMode = GameMode.Result;
-						try {
-							   ranking.updateRanking(bulletHitCounts);
-							} catch (IOException e) {
-						    	e.printStackTrace();
-						    } 
-					}
-					
-					// 敵に当たったらゲームオーバーの処理
-					if(player.isHit(enemy)) {
-						gameMode = GameMode.Result;
-						try {
-							   ranking.updateRanking(bulletHitCounts);
-							} catch (IOException e) {
-						    	e.printStackTrace();
-						    } 
-					}
 				}
 				/* キー入力処理 */
 				else {
@@ -129,7 +139,7 @@ public class Model {
 		
 	}
 
-	private void enemyAddProbability() {
+	private void hoolAddProbability() {
 		// TODO 自動生成されたメソッド・スタブ
 		double n = random.nextDouble();
 		if(n<HOOL_PROBABILITY) {
@@ -139,7 +149,7 @@ public class Model {
 		
 	}
 
-	private void hoolAddProbability() {
+	private void enemyAddProbability() {
 		// TODO 自動生成されたメソッド・スタブ
 		double n = random.nextDouble();
 		if(n<ENEMY_PROBABILITY) {
@@ -148,7 +158,7 @@ public class Model {
 		
 	}
 
-	private void enmeyIsHitBullet() {
+	public void enmeyIsHitBullet() {
 		if(bullets.isEmpty())return ;
 		if(enemy.isEmpty())return ;
 		LinkedList<Enemy> new_es = new LinkedList<Enemy>();
@@ -225,6 +235,25 @@ public class Model {
 	public int getBulletHitCounts() {
 		return bulletHitCounts;
 	}
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+	public void setGameModeGame() {
+		gameMode = GameMode.Game;
+	}
+	public void setGameModeResult() {
+		gameMode = GameMode.Result;
+	}
+	public GameMode getTital() {
+		return GameMode.Tital;
+	}
+	public GameMode getGame() {
+		return GameMode.Game;
+	}
+	public GameMode getResult() {
+		return GameMode.Result;
+	}
+
 
 	private void run() throws IOException {
 		// TODO 自動生成されたメソッド・スタブ

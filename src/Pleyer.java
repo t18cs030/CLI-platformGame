@@ -82,7 +82,7 @@ public class Pleyer {
 	}
 	
 	public boolean isHit(LinkedList<Enemy> es) {
-		// 自機上の文字を読み込む
+		// 自機上の敵を読み込む
 		int i=0,n=0;
 		for(Enemy e:es) {
 			if(dy<0) {
@@ -116,5 +116,8 @@ public class Pleyer {
 	public void set() {
 		x=FARST_X;
 		y=FARST_Y;
+	}
+	public void set(int y) {
+		this.y=y;
 	}
 }

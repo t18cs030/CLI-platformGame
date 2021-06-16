@@ -39,16 +39,14 @@ public class Enemy {
 	public int getY() {
 		return y;
 	}
-	public boolean isHit(int bx,int by) {
-		return x ==bx && y == by;
-	}
 	public boolean isHit(LinkedList<Bullet> bullets) {
 		for(Bullet b:bullets)
 			if((x==b.getX()&&y==b.getY())||(x-1==b.getX()&&y==b.getY()))
 				return true;
 		return false;
 	}
-	public boolean isHit(Bullet b) {
-		return (x==b.getX()&&y==b.getY())||(x==b.getX()+1&&y==b.getY());
+	public void set(int x,int y) {
+		this.x=x;
+		this.y=y;
 	}
 }

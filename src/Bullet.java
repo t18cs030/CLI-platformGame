@@ -12,9 +12,8 @@ public class Bullet {
 	public boolean isHit(LinkedList<Enemy> es) {
 		//LinkedList<Enemy> new_es = new LinkedList<Enemy>();
 		for(Enemy e:es) {
-			if ((e.getX() == x && e.getY() == y)||(x+1==e.getX()&&y==e.getY())){
+			if ((e.getX() == x && e.getY() == y)||(x+1==e.getX()&&y==e.getY()))
 				return true;
-			}
 		}
 		return false;
 	}
