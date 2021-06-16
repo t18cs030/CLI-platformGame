@@ -124,8 +124,6 @@ public class ConsoleView {
 		}
 	}
 	
-
-	
 	// デバック用
 	public ConsoleView() {
 		this.width=80;
@@ -133,6 +131,7 @@ public class ConsoleView {
 		this.screan=new char[width][height];
 	}
 	
+	/* 動作確認用 */
 	public static void main(String[] args) throws InterruptedException {
 		ConsoleView view = new ConsoleView();
 		for(int x=0;x<10;x++) {

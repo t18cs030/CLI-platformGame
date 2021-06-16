@@ -4,17 +4,16 @@ public class Pleyer {
 	
 	private static final int FARST_X = 20; // playerの自機の初期x座標 
 	private static final int FARST_Y = 10; // playerの自機の初期y座標 
-	private static final char FLOOR = '_';
-	private final static double jumpPower=-1.0;
-	private final static double G = 0.2;
-	private boolean isJump;
-	private double dy;
-	private  char c;
-	private int x;
-	private int y;
+	private static final char FLOOR = '_'; // 床の表示キャラクタ指定
+	private final static double jumpPower=-1.0;// jump力
+	private final static double G = 0.2; // 重力
+	private boolean isJump; // ジャンプできるかの判定
+	private double dy; // 縦方向の加速度
+	private  char c; // 自機のキャラクタ
+	private int x; // x座標
+	private int y; // y座標
 
 	public Pleyer() {
-		// TODO 自動生成されたコンストラクター・スタブ
 		this.c='@';
 		this.isJump=false;
 		this.dy=0.0;
@@ -22,6 +21,7 @@ public class Pleyer {
 		this.y=FARST_Y;
 	}
 	
+	// プレイヤーの上移動
 	public void upPlayer() {
 		if(isJump) {
 			dy = -1.25;
@@ -30,12 +30,14 @@ public class Pleyer {
 		}
 	}
 	
+	// プレイヤーの下移動
 	public void downPlayer() {
 		dy = 1.0;
 		y += 1;
 		isJump=false;
 	}
 	
+	// プレイヤーのジャンプ
 	public void jumpPlayer() {
 		if(isJump) {
 			dy = jumpPower;
@@ -44,6 +46,7 @@ public class Pleyer {
 		}
 	}
 	
+	/* 自機の更新 */
 	public void update(ConsoleView view,int width,int height) {
 		// 床がないときに自由落下する
 		if(isOutScrean(width, height))return;
@@ -68,8 +71,7 @@ public class Pleyer {
 		}
 	}
 	
-	
-	
+	/* 床に乗っているかを判定 */
 	public boolean isFloor(ConsoleView view,int height) {
 		double n=y+dy;
 		if(Math.abs(dy)<1)n=y+1;
@@ -81,6 +83,7 @@ public class Pleyer {
 		return false;
 	}
 	
+	/* 敵と当たったか判定 */
 	public boolean isHit(LinkedList<Enemy> es) {
 		// 自機上の敵を読み込む
 		int i=0,n=0;
@@ -100,23 +103,30 @@ public class Pleyer {
 		}
 		return false;
 	}
+	
+	/* 自機が画面外に出ていたらTrueを返す */
 	public boolean isOutScrean(int width,int height) {
 		return x<0 || width <= x || y < 0 || height <= y;
 	}
+	
+	/* 自機をViewに反映させる */
 	public void paint(ConsoleView view) {
 		view.put(c,(int)(x+0.5),(int)(y+0.5));
 	}
+
+	/* 自機を初期値に置き直す */
+	public void set() {
+		x=FARST_X;
+		y=FARST_Y;
+	}
+	
 	public int getX() {
 		return x;
 	}
 	public int getY() {
 		return y;
 	}
-
-	public void set() {
-		x=FARST_X;
-		y=FARST_Y;
-	}
+	
 	public void set(int y) {
 		this.y=y;
 	}
